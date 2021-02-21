@@ -7,10 +7,11 @@ import (
 )
 
 const DefaultUrl = "https://golang.org/"
+const Port = "8080"
 
 func main() {
 	http.HandleFunc("/", shortUrlProcessing)
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":" + Port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
