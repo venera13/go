@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	//"database/sql"
+	//_ "github.com/go-sql-driver/mysql"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	transport "orderservice/pkg/orderservice"
@@ -10,7 +12,11 @@ import (
 	"syscall"
 )
 
-func main(){
+//type Server struct {
+//	db *sql.DB
+//}
+
+func main() {
 	log.SetFormatter(&log.JSONFormatter{})
 	file, err := os.OpenFile("my.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err == nil {
@@ -20,10 +26,21 @@ func main(){
 
 	serverUrl := ":8000"
 	killSignalChat := getKillSignalChan()
+	//db, err := sql.Open("mysql", "root:1234@/orders")
+	if err != nil {
+		log.Fatal(err)
+	}
+	//server := Server{db}
+	//srv := server.startServer(serverUrl)
+	log.WithFields(log.Fields{
+		"url": serverUrl,
+	}).Info("starting the server")
 	srv := startServer(serverUrl)
-
 	waitForKillSignal(killSignalChat)
-	srv.Shutdown(context.Background())
+	err = srv.Shutdown(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func startServer(serverUrl string) *http.Server {

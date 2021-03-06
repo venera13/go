@@ -10,7 +10,7 @@ import (
 
 func TestOrders(t *testing.T) {
 	w := httptest.NewRecorder()
-	orders(w, nil)
+	getOrders(w, nil)
 	response := w.Result()
 	if response.StatusCode != http.StatusOK {
 		t.Errorf("Status code is wrong. Have: %d, want: %d", response.StatusCode, http.StatusOK)
@@ -22,8 +22,8 @@ func TestOrders(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	items := Orders{}
-	if err = json.Unmarshal(jsonString, &items); err != nil {
+	var orders orders
+	if err = json.Unmarshal(jsonString, &orders); err != nil {
 		t.Errorf("Can't parse json: %s response with error %v", jsonString, err)
 	}
 }
