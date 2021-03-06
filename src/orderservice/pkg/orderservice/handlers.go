@@ -87,6 +87,7 @@ func getOrder(w http.ResponseWriter, r *http.Request) {
 		OrderedAtTimeStamp: strconv.FormatInt(time.Now().Unix(), 10),
 		Cost:               999,
 	}
+
 	b, err := json.Marshal(order)
 	if err != nil {
 		log.WithFields(log.Fields{
