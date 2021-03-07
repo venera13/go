@@ -2,19 +2,16 @@ package main
 
 import (
 	"context"
-	//"database/sql"
-	//_ "github.com/go-sql-driver/mysql"
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	log "github.com/sirupsen/logrus"
 	"net/http"
+	model "orderservice/pkg/model"
 	transport "orderservice/pkg/orderservice"
 	"os"
 	"os/signal"
 	"syscall"
 )
-
-//type Server struct {
-//	db *sql.DB
-//}
 
 func main() {
 	log.SetFormatter(&log.JSONFormatter{})
@@ -26,25 +23,26 @@ func main() {
 
 	serverUrl := ":8000"
 	killSignalChat := getKillSignalChan()
-	//db, err := sql.Open("mysql", "root:1234@/orders")
+	db, err := sql.Open("mysql", "root:1234@/orders")
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
-	//server := Server{db}
-	//srv := server.startServer(serverUrl)
+	server := model.Server{Database: db}
+	srv := startServer(serverUrl, server)
 	log.WithFields(log.Fields{
 		"url": serverUrl,
 	}).Info("starting the server")
-	srv := startServer(serverUrl)
 	waitForKillSignal(killSignalChat)
 	err = srv.Shutdown(context.Background())
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
 }
 
-func startServer(serverUrl string) *http.Server {
-	router := transport.Router()
+func startServer(serverUrl string, server model.Server) *http.Server {
+	router := transport.Router(&server)
 	srv := &http.Server{Addr: serverUrl, Handler: router}
 	go func() {
 		log.Fatal(srv.ListenAndServe())

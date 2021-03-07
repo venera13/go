@@ -1,12 +1,13 @@
 package transport
 
 import (
-	//"database/sql"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
+	"orderservice/pkg/model"
+	_ "orderservice/pkg/model"
 	"strconv"
 	"time"
 )
@@ -31,12 +32,12 @@ type orders struct {
 	Orders []order
 }
 
-func Router() http.Handler {
+func Router(srv *model.Server) http.Handler {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/api/v1").Subrouter()
 	s.HandleFunc("/orders", getOrders).Methods(http.MethodGet)
 	s.HandleFunc("/order/{ID}", getOrder).Methods(http.MethodGet)
-	//s.HandleFunc("/order", createOrder).Methods(http.MethodPost)
+	s.HandleFunc("/order", srv.CreateOrder).Methods(http.MethodPost)
 	return logMiddleware(r)
 }
 
@@ -114,47 +115,3 @@ func logMiddleware(h http.Handler) http.Handler {
 		h.ServeHTTP(w, r)
 	})
 }
-
-//func createOrder(w http.ResponseWriter, r *http.Request){
-//	status := http.StatusNotFound
-//	b, err := ioutil.ReadAll(r.Body)
-//	if err != nil {
-//		log.WithFields(log.Fields{
-//			"error": err,
-//		}).Info("read body error")
-//		status = http.StatusForbidden
-//	}
-//	defer func(Body io.ReadCloser) {
-//		if err := Body.Close(); err != nil {
-//			log.WithFields(log.Fields{
-//				"error": err,
-//			}).Info("close error")
-//			status = http.StatusForbidden
-//		}
-//	}(r.Body)
-//	//var msg Orders
-//	//msg.Id = uuid.NewString()
-//	//err = json.Unmarshal(b, &msg)
-//	if err != nil {
-//		log.WithFields(log.Fields{
-//			"error": err,
-//		}).Info("unmarshal error")
-//		status = http.StatusForbidden
-//	}
-//
-//	//id, err := uuid.NewUUID()
-//	//log.WithFields(log.Fields{
-//	//	"msg": msg,
-//	//}).Info("debug")
-//	//length := len(msg.MenuItems)
-//	//log.WithFields(log.Fields{
-//	//	"length": length,
-//	//}).Info("debug")
-//	//result, err := s.db.Query("SELECT * FROM order")
-//	//log.WithFields(log.Fields{
-//	//	"result": result,
-//	//}).Info("BD")
-//	io.WriteString(w, string(rune(length)))
-//	status = http.StatusOK
-//	w.WriteHeader(status)
-//}
