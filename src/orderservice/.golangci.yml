@@ -1,0 +1,11 @@
+run:
+  issues-exit-code: 1
+
+linters:
+  enable-all: true
+  disable:
+    - maligned
+    - prealloc
+linters-settings:
+  govert:
+    check-shadowing: true
