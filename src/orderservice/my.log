@@ -1,27 +1,22 @@
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50370","time":"2021-03-08T14:17:21+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
-{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:17:21+03:00"}
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50374","time":"2021-03-08T14:17:30+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
-{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:17:30+03:00"}
-{"level":"info","msg":"got SIGINT...","time":"2021-03-08T14:17:35+03:00"}
-{"level":"info","msg":"starting the server","time":"2021-03-08T14:17:59+03:00","url":":8000"}
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50376","time":"2021-03-08T14:18:04+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
-{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:18:04+03:00"}
-{"level":"info","msg":"got SIGINT...","time":"2021-03-08T14:19:02+03:00"}
-{"level":"info","msg":"starting the server","time":"2021-03-08T14:22:12+03:00","url":":8000"}
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50388","time":"2021-03-08T14:22:25+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
-{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:22:25+03:00"}
-{"level":"info","msg":"debug","orderItemId":{},"time":"2021-03-08T14:22:25+03:00"}
-{"error":"sql: converting argument $2 type: unsupported type sql.Rows, a struct","level":"info","msg":"mysql query error","time":"2021-03-08T14:22:25+03:00"}
-{"level":"info","msg":"debug","orderItemId":{},"time":"2021-03-08T14:22:25+03:00"}
-{"error":"sql: converting argument $2 type: unsupported type sql.Rows, a struct","level":"info","msg":"mysql query error","time":"2021-03-08T14:22:25+03:00"}
-{"level":"info","msg":"got SIGINT...","time":"2021-03-08T14:22:39+03:00"}
-{"level":"info","msg":"starting the server","time":"2021-03-08T14:33:02+03:00","url":":8000"}
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50418","time":"2021-03-08T14:33:06+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
-{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:33:06+03:00"}
-{"level":"info","msg":"debug","orderItemId":18,"time":"2021-03-08T14:33:06+03:00"}
-{"level":"info","msg":"debug","orderItemId":19,"time":"2021-03-08T14:33:06+03:00"}
-{"level":"info","msg":"got SIGINT...","time":"2021-03-08T15:01:56+03:00"}
-{"level":"info","msg":"starting the server","time":"2021-03-08T15:02:42+03:00","url":":8000"}
-{"level":"info","msg":"got SIGINT...","time":"2021-03-08T15:02:55+03:00"}
-{"level":"info","msg":"starting the server","time":"2021-03-08T15:03:48+03:00","url":":8000"}
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50482","time":"2021-03-08T15:03:53+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T15:51:18+03:00","url":":8000"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50614","time":"2021-03-08T15:51:20+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/b1157a19-8fdd-48cd-84d7-965a6cf03397","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"items":{},"level":"info","msg":"debug","time":"2021-03-08T15:51:20+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T15:52:18+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T15:55:52+03:00","url":":8000"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50630","time":"2021-03-08T15:55:54+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/b1157a19-8fdd-48cd-84d7-965a6cf03397","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"items":[],"level":"info","msg":"debug","time":"2021-03-08T15:55:54+03:00"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50630","time":"2021-03-08T15:56:07+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/b1157a19-8fdd-48cd-84d7-965a6cf03397","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"items":[],"level":"info","msg":"debug","time":"2021-03-08T15:56:07+03:00"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50630","time":"2021-03-08T15:57:17+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/1ab072a7-f7e3-4cae-a9b9-56fe4fc97f1e","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"items":[18,19],"level":"info","msg":"debug","time":"2021-03-08T15:57:17+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T16:06:13+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T16:06:21+03:00","url":":8000"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50666","time":"2021-03-08T16:06:24+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/1ab072a7-f7e3-4cae-a9b9-56fe4fc97f1e","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"items":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}],"level":"info","msg":"debug","time":"2021-03-08T16:06:24+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T16:06:47+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T16:12:58+03:00","url":":8000"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50686","time":"2021-03-08T16:13:09+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/1ab00072a7-f7e3-4cae-a9b9-56fe4fc97f1e","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"error":"sql: no rows in result set","level":"info","msg":"mysql query error","time":"2021-03-08T16:13:09+03:00"}
+{"level":"info","method":"GET","msg":"got a new request","remoteAddr":"127.0.0.1:50686","time":"2021-03-08T16:13:38+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order/155072a7-f7e3-4cae-a9b9-56fe4fc97f1e","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0"}
+{"error":"sql: no rows in result set","level":"info","msg":"mysql query error","time":"2021-03-08T16:13:38+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T16:14:03+03:00"}

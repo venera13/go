@@ -9,45 +9,28 @@ import (
 	"net/http"
 	"orderservice/pkg/model"
 	_ "orderservice/pkg/model"
-	"strconv"
-	"time"
 )
-
-type order struct {
-	Id    string `json:"id"`
-	Items []orderItem
-}
-
-type orderResponse struct {
-	order
-	OrderedAtTimeStamp string `json:"orderedAtTimeStamp"`
-	Cost               int    `json:"cost"`
-}
 
 type orderItem struct {
 	Id       string `json:"id"`
 	Quantity int    `json:"quantity"`
 }
 
-type orders struct {
-	Orders []order
-}
-
-func Router(srv *model.Server) http.Handler {
+func Router(serviceInterface model.OrderServiceInterface) http.Handler {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/api/v1").Subrouter()
 	s.HandleFunc("/orders", getOrders).Methods(http.MethodGet)
-	s.HandleFunc("/order/{ID}", getOrder).Methods(http.MethodGet)
-	s.HandleFunc("/order", CreateOrder(srv)).Methods(http.MethodPost)
+	s.HandleFunc("/order/{ID}", getOrder(serviceInterface)).Methods(http.MethodGet)
+	s.HandleFunc("/order", CreateOrder(serviceInterface)).Methods(http.MethodPost)
 	return logMiddleware(r)
 }
 
 func getOrders(w http.ResponseWriter, _ *http.Request) {
-	orders := orders{
-		Orders: []order{
+	orders := model.Orders{
+		Orders: []model.Order{
 			{
 				Id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-				Items: []orderItem{
+				Items: []model.OrderItem{
 					{
 						Id:       "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 						Quantity: 1,
@@ -71,37 +54,36 @@ func getOrders(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
-func getOrder(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	if vars["ID"] == "" {
-		http.Error(w, "order not found", http.StatusBadRequest)
-	}
-	order := orderResponse{
-		order: order{
-			Id: vars["ID"],
-			Items: []orderItem{
-				{
-					Id:       vars["ID"],
-					Quantity: 1,
-				},
-			},
-		},
-		OrderedAtTimeStamp: strconv.FormatInt(time.Now().Unix(), 10),
-		Cost:               999,
-	}
-
-	b, err := json.Marshal(order)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err,
-		}).Info("order marshal error")
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	_, err = io.WriteString(w, string(b))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+func getOrder(serviceInterface model.OrderServiceInterface) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		status := http.StatusNotFound
+		vars := mux.Vars(r)
+		if vars["ID"] == "" {
+			http.Error(w, "order not found", http.StatusBadRequest)
+		}
+		order, status := serviceInterface.GetOrder(vars["ID"])
+		if order.Id == "" {
+			w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+			w.WriteHeader(status)
+			_, err := io.WriteString(w, "Order not found")
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		} else {
+			b, err := json.Marshal(order)
+			if err != nil {
+				log.WithFields(log.Fields{
+					"error": err,
+				}).Info("order marshal error")
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+			w.WriteHeader(status)
+			_, err = io.WriteString(w, string(b))
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}
 	}
 }
 
