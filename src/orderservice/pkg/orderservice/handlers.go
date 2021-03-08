@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"orderservice/pkg/model"
 	_ "orderservice/pkg/model"
@@ -37,7 +38,7 @@ func Router(srv *model.Server) http.Handler {
 	s := r.PathPrefix("/api/v1").Subrouter()
 	s.HandleFunc("/orders", getOrders).Methods(http.MethodGet)
 	s.HandleFunc("/order/{ID}", getOrder).Methods(http.MethodGet)
-	s.HandleFunc("/order", srv.CreateOrder).Methods(http.MethodPost)
+	s.HandleFunc("/order", CreateOrder(srv)).Methods(http.MethodPost)
 	return logMiddleware(r)
 }
 
@@ -114,4 +115,25 @@ func logMiddleware(h http.Handler) http.Handler {
 		}).Info("got a new request")
 		h.ServeHTTP(w, r)
 	})
+}
+
+func CreateOrder(serviceInterface model.OrderServiceInterface) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		status := http.StatusNotFound
+		b, err := ioutil.ReadAll(r.Body)
+		status = model.LogError(err)
+		defer func(Body io.ReadCloser) {
+			status = model.LogError(err)
+		}(r.Body)
+		var msg model.CreateOrderResponse
+		err = json.Unmarshal(b, &msg)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"error": err,
+			}).Info("unmarshal error")
+			status = http.StatusForbidden
+		}
+		status = serviceInterface.CreateOrder(msg)
+		w.WriteHeader(status)
+	}
 }

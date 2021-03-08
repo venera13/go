@@ -1,4 +1,27 @@
-{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:49834","time":"2021-03-07T18:15:37+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
-{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":0},{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":0}]},"level":"info","msg":"debug","time":"2021-03-07T18:15:37+03:00"}
-{"error":"json: cannot unmarshal string into Go struct field orderItem.MenuItems.quantity of type int","level":"info","msg":"unmarshal error","time":"2021-03-07T18:15:37+03:00"}
-{"error":"Error 1130: Host 'localhost' is not allowed to connect to this MySQL server","level":"info","msg":"mysql query error","time":"2021-03-07T18:15:37+03:00"}
+{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50370","time":"2021-03-08T14:17:21+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
+{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:17:21+03:00"}
+{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50374","time":"2021-03-08T14:17:30+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
+{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:17:30+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T14:17:35+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T14:17:59+03:00","url":":8000"}
+{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50376","time":"2021-03-08T14:18:04+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
+{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:18:04+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T14:19:02+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T14:22:12+03:00","url":":8000"}
+{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50388","time":"2021-03-08T14:22:25+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
+{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:22:25+03:00"}
+{"level":"info","msg":"debug","orderItemId":{},"time":"2021-03-08T14:22:25+03:00"}
+{"error":"sql: converting argument $2 type: unsupported type sql.Rows, a struct","level":"info","msg":"mysql query error","time":"2021-03-08T14:22:25+03:00"}
+{"level":"info","msg":"debug","orderItemId":{},"time":"2021-03-08T14:22:25+03:00"}
+{"error":"sql: converting argument $2 type: unsupported type sql.Rows, a struct","level":"info","msg":"mysql query error","time":"2021-03-08T14:22:25+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T14:22:39+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T14:33:02+03:00","url":":8000"}
+{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50418","time":"2021-03-08T14:33:06+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}
+{"fields.msg":{"MenuItems":[{"id":"fkdljfhnfdkjghkdjfghkdjg","quantity":2},{"id":"amnjvnjfkvjmfk","quantity":1}]},"level":"info","msg":"debug","time":"2021-03-08T14:33:06+03:00"}
+{"level":"info","msg":"debug","orderItemId":18,"time":"2021-03-08T14:33:06+03:00"}
+{"level":"info","msg":"debug","orderItemId":19,"time":"2021-03-08T14:33:06+03:00"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T15:01:56+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T15:02:42+03:00","url":":8000"}
+{"level":"info","msg":"got SIGINT...","time":"2021-03-08T15:02:55+03:00"}
+{"level":"info","msg":"starting the server","time":"2021-03-08T15:03:48+03:00","url":":8000"}
+{"level":"info","method":"POST","msg":"got a new request","remoteAddr":"127.0.0.1:50482","time":"2021-03-08T15:03:53+03:00","url":{"Scheme":"","Opaque":"","User":null,"Host":"","Path":"/api/v1/order","RawPath":"","ForceQuery":false,"RawQuery":"","Fragment":""},"userAgent":"Apache-HttpClient/4.5.13 (Java/11.0.10)"}

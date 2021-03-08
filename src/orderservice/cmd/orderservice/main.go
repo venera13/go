@@ -23,7 +23,7 @@ func main() {
 
 	serverUrl := ":8000"
 	killSignalChat := getKillSignalChan()
-	db, err := sql.Open("mysql", "root:1234@/orders")
+	db, err := sql.Open("mysql", "root:12345678@/orders")
 	if err != nil {
 		log.Fatal(err)
 		return
