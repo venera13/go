@@ -87,18 +87,6 @@ func getOrder(serviceInterface model.OrderServiceInterface) func(w http.Response
 	}
 }
 
-func logMiddleware(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.WithFields(log.Fields{
-			"method":     r.Method,
-			"url":        r.URL,
-			"remoteAddr": r.RemoteAddr,
-			"userAgent":  r.UserAgent(),
-		}).Info("got a new request")
-		h.ServeHTTP(w, r)
-	})
-}
-
 func CreateOrder(serviceInterface model.OrderServiceInterface) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		status := http.StatusNotFound
@@ -118,4 +106,16 @@ func CreateOrder(serviceInterface model.OrderServiceInterface) func(w http.Respo
 		status = serviceInterface.CreateOrder(msg)
 		w.WriteHeader(status)
 	}
+}
+
+func logMiddleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.WithFields(log.Fields{
+			"method":     r.Method,
+			"url":        r.URL,
+			"remoteAddr": r.RemoteAddr,
+			"userAgent":  r.UserAgent(),
+		}).Info("got a new request")
+		h.ServeHTTP(w, r)
+	})
 }

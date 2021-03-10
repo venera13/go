@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -15,15 +16,22 @@ import (
 
 func main() {
 	log.SetFormatter(&log.JSONFormatter{})
+
+	config, err := parseEnv()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	file, err := os.OpenFile("my.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err == nil {
 		log.SetOutput(file)
 		defer file.Close()
 	}
 
-	serverUrl := ":8000"
+	serverUrl := config.ServeRESTAddress
 	killSignalChat := getKillSignalChan()
-	db, err := sql.Open("mysql", "root:12345678@/orders")
+	dataSourceName := fmt.Sprintf("%d:%d@/%d", config.Database.DBUser, config.Database.DBPass, config.Database.DBName)
+	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		log.Fatal(err)
 		return
