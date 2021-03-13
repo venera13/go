@@ -30,7 +30,10 @@ func main() {
 
 	serverUrl := config.ServeRESTAddress
 	killSignalChat := getKillSignalChan()
-	dataSourceName := fmt.Sprintf("%d:%d@/%d", config.Database.DBUser, config.Database.DBPass, config.Database.DBName)
+	dataSourceName := fmt.Sprintf("%s:%s@/%s", config.DBUser, config.DBPass, config.DBName)
+	log.WithFields(log.Fields{
+		"dataSourceName": dataSourceName,
+	}).Info("DEBUparseEnvG")
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		log.Fatal(err)
