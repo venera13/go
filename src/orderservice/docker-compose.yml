@@ -8,20 +8,32 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      ORDERSERVICE_SERVE_REST_ADDRESS: ":8000"
     depends_on:
       - orderservice-db
 
   orderservice-db:
-    image: "percona/percona-server:5.7"
+    image: "mysql:8.0"
+    expose:
+      - 3306
     container_name: orderservice-db
     environment:
-      ORDERSERVICE_MYSQL_DATABASE: orders
-      ORDERSERVICE_MYSQL_USER: root
-      ORDERSERVICE_MYSQL_PASSWORD: 12345678
+      MYSQL_DATABASE: orders
+      MYSQL_ROOT_PASSWORD: 12345678
     volumes:
     - "db-data:/var/lib/mysql"
-
+    ports:
+    - "3306:3306"
+  migrations:
+    image: mathewhall/mysql_migration
+    volumes:
+      - ./migrations:/docker-entrypoint-migrations.d/
+    links:
+      - orderservice-db
+    environment:
+      MYSQL_HOST: orderservice-db
+      MYSQL_DATABASE: orders
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 12345678
 volumes:
   db-data:
+
