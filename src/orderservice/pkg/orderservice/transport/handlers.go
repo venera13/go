@@ -25,19 +25,6 @@ func Router(serviceInterface model.OrderServiceInterface) http.Handler {
 
 func getOrders(serviceInterface model.OrderServiceInterface) func(w http.ResponseWriter, _ *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		//orders := model.Orders{
-		//	Orders: []model.Order{
-		//		{
-		//			Id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-		//			Items: []model.OrderItem{
-		//				{
-		//					Id:       "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-		//					Quantity: 1,
-		//				},
-		//			},
-		//		},
-		//	},
-		//}
 		orders, err := serviceInterface.GetOrders()
 		if err != nil {
 			logError(err)

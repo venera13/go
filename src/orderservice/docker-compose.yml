@@ -23,17 +23,6 @@ services:
     - "db-data:/var/lib/mysql"
     ports:
     - "3306:3306"
-  migrations:
-    image: mathewhall/mysql_migration
-    volumes:
-      - ./migrations:/docker-entrypoint-migrations.d/
-    links:
-      - orderservice-db
-    environment:
-      MYSQL_HOST: orderservice-db
-      MYSQL_DATABASE: orders
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 12345678
 volumes:
   db-data:
 
