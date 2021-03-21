@@ -8,11 +8,11 @@ Content-Type: application/json
 {
   "menuItems": [
     {
-      "id": "fjfl-dfjf-rftg-dvgb",
+      "id": "2222-fffff",
       "quantity": 2
     },
     {
-      "id": "abcd-abcd-abcd-abcd",
+      "id": "asdfg-abcd-abcd-abcd",
       "quantity": 1
     }
   ]

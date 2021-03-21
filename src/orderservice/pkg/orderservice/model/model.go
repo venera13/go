@@ -3,18 +3,11 @@ package model
 import (
 	"database/sql"
 	"github.com/google/uuid"
-	log "github.com/sirupsen/logrus"
-	"net/http"
 	"time"
 )
 
 type Server struct {
 	Database *sql.DB
-}
-
-type Order struct {
-	Id    string `json:"id"`
-	Items []OrderItem
 }
 
 type Orders struct {
@@ -26,63 +19,63 @@ type OrderItem struct {
 	Quantity int    `json:"quantity"`
 }
 
-type CreateOrderResponse struct {
-	MenuItems []OrderItem `json:"MenuItems"`
-}
-
-type OrderResponse struct {
-	Order
+type Order struct {
+	Id                 string `json:"id"`
+	Items              []OrderItem
 	OrderedAtTimeStamp string `json:"orderedAtTimeStamp"`
 	Cost               int    `json:"cost"`
 }
 
 type OrderServiceInterface interface {
-	CreateOrder(orderResponse CreateOrderResponse) int
-	GetOrder(orderId string) (OrderResponse, int)
+	CreateOrder(orderItems *[]OrderItem) error
+	GetOrder(orderId string) (Order, error)
+	GetOrders() ([]Order, error)
 }
 
-func (s *Server) CreateOrder(orderResponse CreateOrderResponse) int {
-	status := http.StatusNotFound
+func (s *Server) CreateOrder(orderItems *[]OrderItem) error {
 	orderId := uuid.NewString()
 	timestamp := time.Now().Unix()
 	cost := 999
 	query := "INSERT INTO orders(order_id, time, cost) VALUES (?, ?, ?)"
 	_, err := s.Database.Exec(query, orderId, timestamp, cost)
-	status = LogError(err)
 
-	for _, menuItem := range orderResponse.MenuItems {
+	for _, menuItem := range *orderItems {
 		query = "INSERT INTO order_item(menu_id, quantity) VALUES (?, ?)"
 		quantity := 1
 		if menuItem.Quantity != 0 {
 			quantity = menuItem.Quantity
 		}
 		result, err := s.Database.Exec(query, menuItem.Id, quantity)
-		status = LogError(err)
+		if err != nil {
+			return err
+		}
 		lastInsertId, err := result.LastInsertId()
-		status = LogError(err)
+		if err != nil {
+			return err
+		}
 		query = "INSERT INTO item_in_order(order_id, item_id) VALUES (?, ?)"
 		_, err = s.Database.Exec(query, orderId, lastInsertId)
-		status = LogError(err)
+		if err != nil {
+			return err
+		}
 	}
-	return status
+	return err
 }
 
-func (s *Server) GetOrder(orderId string) (OrderResponse, int) {
-	status := http.StatusNotFound
-	var order OrderResponse
+func (s *Server) GetOrder(orderId string) (Order, error) {
+	var order Order
 	order.Id = orderId
 	query := "SELECT time, cost FROM orders where order_id = ? "
 	err := s.Database.QueryRow(query, orderId).Scan(&order.OrderedAtTimeStamp, &order.Cost)
 	if err != nil {
-		status = LogError(err)
-		return OrderResponse{}, status
+		return Order{}, err
 	}
 
 	query = "SELECT item_id FROM item_in_order where order_id = ? "
-	items, err := s.Database.Query(query, orderId)
+	var items *sql.Rows
+	items, err = s.Database.Query(query, orderId)
 	if err != nil {
-		status = LogError(err)
-		return OrderResponse{}, status
+		return Order{}, err
 	}
 
 	orderItemsId := make([]int, 0)
@@ -90,7 +83,9 @@ func (s *Server) GetOrder(orderId string) (OrderResponse, int) {
 	for items.Next() {
 		var orderId int
 		err := items.Scan(&orderId)
-		status = LogError(err)
+		if err != nil {
+			return Order{}, err
+		}
 		orderItemsId = append(orderItemsId, orderId)
 	}
 
@@ -100,22 +95,37 @@ func (s *Server) GetOrder(orderId string) (OrderResponse, int) {
 		var orderItem OrderItem
 		err := s.Database.QueryRow(query, orderItemId).Scan(&orderItem.Id, &orderItem.Quantity)
 		if err != nil {
-			status = LogError(err)
-			return OrderResponse{}, status
+			return Order{}, err
 		}
 		orderItems = append(orderItems, orderItem)
 	}
 
 	order.Items = orderItems
-	return order, status
+	return order, err
 }
 
-func LogError(err error) int {
+func (s *Server) GetOrders() ([]Order, error) {
+	query := "SELECT order_id FROM orders"
+	ordersId, err := s.Database.Query(query)
 	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err,
-		}).Info("mysql query error")
-		return http.StatusForbidden
+		return nil, err
 	}
-	return http.StatusOK
+
+	orders := make([]Order, 0)
+
+	for ordersId.Next() {
+		var orderId string
+		err := ordersId.Scan(&orderId)
+		if err != nil {
+			return nil, err
+		}
+		var order Order
+		order, err = s.GetOrder(orderId)
+		if err != nil {
+			return nil, err
+		}
+		orders = append(orders, order)
+	}
+
+	return orders, err
 }

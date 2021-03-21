@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"orderservice/pkg/orderservice/model"
 	"testing"
 )
 
@@ -22,7 +23,7 @@ func TestOrders(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var orders orders
+	var orders model.Orders
 	if err = json.Unmarshal(jsonString, &orders); err != nil {
 		t.Errorf("Can't parse json: %s response with error %v", jsonString, err)
 	}
