@@ -32,6 +32,10 @@ type OrderServiceInterface interface {
 	GetOrders() ([]Order, error)
 }
 
+func NewServer(db *sql.DB) OrderServiceInterface {
+	return &Server{Database: db}
+}
+
 func (s *Server) CreateOrder(orderItems *[]OrderItem) error {
 	orderId := uuid.NewString()
 	timestamp := time.Now().Unix()

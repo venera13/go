@@ -28,22 +28,14 @@ func main() {
 		defer file.Close()
 	}
 
-	serverUrl := config.ServeRESTAddress
 	killSignalChat := getKillSignalChan()
-	dataSourceName := fmt.Sprintf("%s:%s@/%s", config.DBUser, config.DBPass, config.DBName)
-	log.WithFields(log.Fields{
-		"dataSourceName": dataSourceName,
-	}).Info("DEBUparseEnvG")
-	db, err := sql.Open("mysql", dataSourceName)
+
+	var srv *http.Server
+	srv, err = startServer(config)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-	server := model.Server{Database: db}
-	srv := startServer(serverUrl, server)
-	log.WithFields(log.Fields{
-		"url": serverUrl,
-	}).Info("starting the server")
 	waitForKillSignal(killSignalChat)
 	err = srv.Shutdown(context.Background())
 	if err != nil {
@@ -52,14 +44,26 @@ func main() {
 	}
 }
 
-func startServer(serverUrl string, server model.Server) *http.Server {
-	router := transport.Router(&server)
+func startServer(config *config) (*http.Server, error) {
+	serverUrl := config.ServeRESTAddress
+	log.WithFields(log.Fields{
+		"url": serverUrl,
+	}).Info("starting the server")
+
+	db, err := createDBConn(config)
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+
+	server := makeServer(db)
+	router := transport.Router(server)
 	srv := &http.Server{Addr: serverUrl, Handler: router}
 	go func() {
 		log.Fatal(srv.ListenAndServe())
 	}()
 
-	return srv
+	return srv, nil
 }
 
 func getKillSignalChan() chan os.Signal {
@@ -76,4 +80,23 @@ func waitForKillSignal(killSignalChan <-chan os.Signal) {
 	case syscall.SIGTERM:
 		log.Info("got SIGTERM...")
 	}
+}
+
+func makeServer(db *sql.DB) *transport.Server {
+	return &transport.Server{
+		OrderService: model.NewServer(db),
+	}
+}
+
+func createDBConn(config *config) (*sql.DB, error) {
+	dataSourceName := fmt.Sprintf("%s:%s@/%s", config.DBUser, config.DBPass, config.DBName)
+	log.WithFields(log.Fields{
+		"dataSourceName": dataSourceName,
+	}).Info("DEBUparseEnvG")
+	db, err := sql.Open("mysql", dataSourceName)
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+	return db, nil
 }
