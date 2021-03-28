@@ -1,6 +1,6 @@
 FROM debian:9-slim
 
-ADD ./cmd/orderservice/orderservice /app/bin/
+ADD ./bin/orderservice /app/bin/
 WORKDIR /app
 
 EXPOSE 8000

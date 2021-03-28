@@ -13,16 +13,12 @@ services:
 
   orderservice-db:
     image: "mysql:8.0"
-    expose:
-      - 3306
     container_name: orderservice-db
     environment:
       MYSQL_DATABASE: orders
       MYSQL_ROOT_PASSWORD: 12345678
     volumes:
     - "db-data:/var/lib/mysql"
-    ports:
-    - "3306:3306"
 volumes:
   db-data:
 
