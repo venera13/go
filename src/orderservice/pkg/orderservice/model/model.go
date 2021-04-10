@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Server struct {
+type OrderService struct {
 	Database *sql.DB
 }
 
@@ -33,10 +33,10 @@ type OrderServiceInterface interface {
 }
 
 func NewServer(db *sql.DB) OrderServiceInterface {
-	return &Server{Database: db}
+	return &OrderService{Database: db}
 }
 
-func (s *Server) CreateOrder(orderItems *[]OrderItem) error {
+func (s *OrderService) CreateOrder(orderItems *[]OrderItem) error {
 	orderId := uuid.NewString()
 	timestamp := time.Now().Unix()
 	cost := 999
@@ -66,7 +66,7 @@ func (s *Server) CreateOrder(orderItems *[]OrderItem) error {
 	return err
 }
 
-func (s *Server) GetOrder(orderId string) (Order, error) {
+func (s *OrderService) GetOrder(orderId string) (Order, error) {
 	var order Order
 	order.Id = orderId
 	query := "SELECT time, cost FROM orders where order_id = ? "
@@ -108,7 +108,7 @@ func (s *Server) GetOrder(orderId string) (Order, error) {
 	return order, err
 }
 
-func (s *Server) GetOrders() ([]Order, error) {
+func (s *OrderService) GetOrders() ([]Order, error) {
 	query := "SELECT order_id FROM orders"
 	ordersId, err := s.Database.Query(query)
 	if err != nil {

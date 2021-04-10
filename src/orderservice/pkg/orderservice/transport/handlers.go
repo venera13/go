@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"orderservice/pkg/orderservice/model"
+	"time"
 )
 
 type Server struct {
@@ -76,14 +77,6 @@ func (serviceInterface *Server) createOrder(w http.ResponseWriter, r *http.Reque
 		writeResponse(w, status, "Error")
 		return
 	}
-	defer func(Body io.ReadCloser) {
-		if err != nil {
-			logError(err)
-			status = http.StatusInternalServerError
-			writeResponse(w, status, "Error")
-			return
-		}
-	}(r.Body)
 	var msg createOrderResponse
 	err = json.Unmarshal(b, &msg)
 	if err != nil {
@@ -104,11 +97,13 @@ func (serviceInterface *Server) createOrder(w http.ResponseWriter, r *http.Reque
 
 func logMiddleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
 		log.WithFields(log.Fields{
 			"method":     r.Method,
 			"url":        r.URL,
 			"remoteAddr": r.RemoteAddr,
 			"userAgent":  r.UserAgent(),
+			"time":       time.Since(start),
 		}).Info("got a new request")
 		h.ServeHTTP(w, r)
 	})

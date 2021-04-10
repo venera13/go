@@ -22,12 +22,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	file, err := os.OpenFile("my.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
-	if err == nil {
-		log.SetOutput(file)
-		defer file.Close()
-	}
-
 	killSignalChat := getKillSignalChan()
 
 	var srv *http.Server
@@ -90,9 +84,6 @@ func makeServer(db *sql.DB) *transport.Server {
 
 func createDBConn(config *config) (*sql.DB, error) {
 	dataSourceName := fmt.Sprintf("%s:%s@/%s", config.DBUser, config.DBPass, config.DBName)
-	log.WithFields(log.Fields{
-		"dataSourceName": dataSourceName,
-	}).Info("DEBUparseEnvG")
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		log.Fatal(err)
